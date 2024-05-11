@@ -87,8 +87,9 @@ services:
     container_name: cdr
     environment:
       BOOTSTRAP_SERVERS_CONFIG: kafka:29092
-      MIN_UNIX_GAP: 1000000
-      MAX_UNIX_GAP: 1500000
+      MIN_UNIX_GAP: 500
+      MAX_UNIX_GAP: 700
+      MAX_CALL_DURATION: 10
     ports:
       - "8080:8080"
     networks:
@@ -107,7 +108,7 @@ services:
       POSTGRES_DATABASE: postgres
       POSTGRES_URL: jdbc:postgresql://database:5432/postgres
       BOOTSTRAP_SERVERS_CONFIG: kafka:29092
-      MAX_DEPOSIT: 1000
+      MAX_DEPOSIT: 500
     ports:
       - "8081:8081"
     networks:

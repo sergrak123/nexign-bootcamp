@@ -45,7 +45,7 @@ public class BrtService {
     public void processingAndSendingCallData(String data) {
 
         List<CallDataRecordDto> cdr = parseCallDataFromReceivedData(data);
-        log.info("Received: " + cdr);
+        loggingReceivedData(cdr);
 
         for (CallDataRecordDto callDataRecord : cdr) {
             int callMonth = extractMonthFromCallData(callDataRecord);
@@ -137,6 +137,13 @@ public class BrtService {
             }
         }
         return authorizedCdr;
+    }
+
+    private void loggingReceivedData(List<CallDataRecordDto> cdr) {
+        for (CallDataRecordDto record : cdr) {
+            log.info("Received: " + record);
+        }
+
     }
 
 }

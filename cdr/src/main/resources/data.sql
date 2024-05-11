@@ -9,6 +9,16 @@ INSERT INTO abonents (phone_number, is_romashka_client)
 VALUES ('79168034603', true);
 INSERT INTO abonents (phone_number, is_romashka_client)
 VALUES ('79826977157', true);
+INSERT INTO abonents (phone_number, is_romashka_client)
+VALUES ('79361097696', true);
+INSERT INTO abonents (phone_number, is_romashka_client)
+VALUES ('79493434998', true);
+INSERT INTO abonents (phone_number, is_romashka_client)
+VALUES ('79150721215', true);
+INSERT INTO abonents (phone_number, is_romashka_client)
+VALUES ('79082192852', true);
+INSERT INTO abonents (phone_number, is_romashka_client)
+VALUES ('79391477766', true);
 --
 INSERT INTO abonents (phone_number, is_romashka_client)
 VALUES ('79304297409', false);
@@ -22,26 +32,3 @@ INSERT INTO abonents (phone_number, is_romashka_client)
 VALUES ('79437938986', false);
 
 -- http://localhost:8080/h2-console
-
-
--- Simple adding
--- INSERT INTO abonents (phone_number)
--- VALUES ('79079765785');
--- INSERT INTO abonents (phone_number)
--- VALUES ('79940402705');
--- INSERT INTO abonents (phone_number)
--- VALUES ('79389821025');
--- INSERT INTO abonents (phone_number)
--- VALUES ('79168034603');
--- INSERT INTO abonents (phone_number)
--- VALUES ('79826977157');
--- INSERT INTO abonents (phone_number)
--- VALUES ('79304297409');
--- INSERT INTO abonents (phone_number)
--- VALUES ('79105019470');
--- INSERT INTO abonents (phone_number)
--- VALUES ('79981679394');
--- INSERT INTO abonents (phone_number)
--- VALUES ('79571901641');
--- INSERT INTO abonents (phone_number)
--- VALUES ('79437938986');
