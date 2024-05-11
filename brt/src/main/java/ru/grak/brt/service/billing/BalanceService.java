@@ -30,4 +30,10 @@ public class BalanceService {
 
         clientRepository.save(client);
     }
+
+    public BigDecimal getBalance(String msisdn) {
+        var client = clientRepository.findByPhoneNumber(msisdn);
+        return client.getBalance();
+    }
+
 }

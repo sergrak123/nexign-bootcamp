@@ -2,8 +2,6 @@ package ru.grak.brt.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
@@ -103,7 +101,7 @@ public class BrtService {
     }
 
     //test
-    @EventListener(ApplicationReadyEvent.class)
+//    @EventListener(ApplicationReadyEvent.class)
     public void testAuthentication() throws IOException {
 
         String cdrFileName = "brt/data/cdr.txt";

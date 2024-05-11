@@ -13,5 +13,5 @@ COPY ${JAR_FILE} app.jar
 # Команда запуска приложения
 ENTRYPOINT ["java","-jar","app.jar"]
 
-#docker build -t graksergey/spring-boot-crm:latest .
-#docker run -p 8083:8083 graksergey/spring-boot-crm:latest
+#docker build -t graksergey/spring-boot-hrs:latest .
+#docker run -p 8082:8082 graksergey/spring-boot-hrs:latest

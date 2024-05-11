@@ -51,3 +51,47 @@ create table call_cost
 
 alter table call_cost
     owner to postgres;
+
+
+-- role
+create table roles
+(
+    id   bigserial
+        constraint roles_pkey
+            primary key,
+    name varchar(255)
+        constraint roles_name_check
+            check ((name)::text = ANY ((ARRAY ['USER'::character varying, 'ADMIN'::character varying])::text[]))
+);
+
+alter table roles
+    owner to postgres;
+
+
+--users(CRM)
+create table users
+(
+    id       bigserial
+        constraint users_pkey
+            primary key,
+    password varchar(255),
+    username varchar(255)
+);
+
+alter table users
+    owner to postgres;
+
+
+--user_role
+create table user_roles
+(
+    role_id bigint not null
+        constraint fkh8ciramu9cc9q3qcqiv4ue8a6
+            references roles,
+    user_id bigint not null
+        constraint fkhfh9dx7w3ubf1co1vdev94g3f
+            references users
+);
+
+alter table user_roles
+    owner to postgres;

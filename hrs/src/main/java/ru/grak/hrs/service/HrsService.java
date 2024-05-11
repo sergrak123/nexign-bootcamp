@@ -35,6 +35,7 @@ public class HrsService {
 
         int callMonth = extractMonthFromCallData(cdrPlus);
 
+        //change - firstly
         if (callMonth > currentMonth) {
             currentMonth = callMonth;
 //            withdrawFee();
