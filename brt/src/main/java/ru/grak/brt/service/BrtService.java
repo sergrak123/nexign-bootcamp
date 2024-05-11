@@ -41,7 +41,21 @@ public class BrtService {
 
     //TODO transactional
 
-    @KafkaListener(topics = "brt", groupId = "brt-topic-default", containerFactory = "kafkaListenerContainerFactory")
+    /**
+     * Принимает данные от CDR сервиса (топика кафки) по 10 записей в виде строки,
+     * парсит данные в список из элементов CallDataRecord. Отсеивает записи, не принадлежащие
+     * абонентам оператора "Ромашки". Авторизованные записи наполняет данными о тарифе
+     * клиента и маркером,который обозначает - внутренний звонок или нет (необходим
+     * для дальнейшей тарификации). Наполненные данные отправляются в сервис HRS
+     * для расчета (в топик кафки).
+     * <p>
+     * Также, сервис автоматически пополняет балансы всех клиентов и
+     * изменяет тариф у случайного количества клиентов.
+     *
+     * @param data Данные звонков, приходящие из сервиса CDR.
+     */
+    @KafkaListener(topics = "brt", groupId = "brt-topic-default",
+            containerFactory = "kafkaListenerContainerFactory")
     public void processingAndSendingCallData(String data) {
 
         List<CallDataRecordDto> cdr = parseCallDataFromReceivedData(data);
@@ -63,6 +77,12 @@ public class BrtService {
         }
     }
 
+    /**
+     * Принимает данные о стоимости звонка/месячной абонентской платы
+     * из HRS(топика кафки) и списывает стоимость услуг с баланса клиента.
+     *
+     * @param invoiceData Данные о стоимости услуг и msisdn клиента для списания.
+     */
     @KafkaListener(topics = "hrs-reply", groupId = "hrs-topic-reply-default", containerFactory =
             "costDataKafkaListenerContainerFactory")
     public void processingCostData(InvoiceDto invoiceData) {
@@ -70,6 +90,12 @@ public class BrtService {
         balanceService.decreaseBalance(invoiceData.getMsisdn(), invoiceData.getCost());
     }
 
+    /**
+     * Разбирает(парсит) данные вызовов из полученных данных(строки).
+     *
+     * @param data Полученные данные в виде строки из CDR сервиса для разбора.
+     * @return Список объектов CallDataRecordDto, представляющих данные вызовов.
+     */
     private List<CallDataRecordDto> parseCallDataFromReceivedData(String data) {
 
         List<CallDataRecordDto> callDataRecordList = new ArrayList<>();
@@ -93,6 +119,12 @@ public class BrtService {
         return callDataRecordList;
     }
 
+    /**
+     * Извлекает месяц из данных вызова.
+     *
+     * @param callDataRecord Данные вызова, из которых нужно извлечь месяц.
+     * @return Месяц из данных вызова.
+     */
     private int extractMonthFromCallData(CallDataRecordDto callDataRecord) {
         var dateTimeStartCall = callDataRecord.getDateTimeStartCall();
 
@@ -101,7 +133,13 @@ public class BrtService {
                 .getMonthValue();
     }
 
-    //test - необходимо для возожности подмены данных генератора реальными файлами
+    /**
+     * Метод, необходимый для возожности подмены данных генератора
+     * реальными файлами с CDR записями.
+     * <p>
+     * Запускается автоматически при запуске приложения. Файлы
+     * должны храниться в папке brt/data.
+     */
     //@EventListener(ApplicationReadyEvent.class)
     public void filesProcessingAndSendingCallData() throws IOException {
 
