@@ -24,7 +24,4 @@ public class Tariff {
     private Long inCallCostType;
     private Long outCallCostType;
 
-//    private BigDecimal internalCost;
-//    private BigDecimal externalCost;
-
 }

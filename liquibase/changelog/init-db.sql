@@ -19,6 +19,20 @@ alter sequence clients_id_seq owner to postgres;
 alter sequence clients_id_seq owned by clients.id;
 
 
+-- call_cost
+create table call_cost
+(
+    external_cost  numeric(38, 2),
+    internal_cost  numeric(38, 2),
+    call_cost_type bigserial
+        constraint call_cost_pkey
+            primary key
+);
+
+alter table call_cost
+    owner to postgres;
+
+
 -- tariff
 create table if not exists tariff
 (
@@ -36,20 +50,6 @@ create table if not exists tariff
 );
 
 alter table tariff
-    owner to postgres;
-
-
--- call_cost
-create table call_cost
-(
-    external_cost  numeric(38, 2),
-    internal_cost  numeric(38, 2),
-    call_cost_type bigserial
-        constraint call_cost_pkey
-            primary key
-);
-
-alter table call_cost
     owner to postgres;
 
 

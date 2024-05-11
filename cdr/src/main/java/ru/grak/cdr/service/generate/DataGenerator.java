@@ -1,6 +1,7 @@
 package ru.grak.cdr.service.generate;
 
 import org.antlr.v4.runtime.misc.Pair;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.grak.cdr.entity.Abonent;
 
@@ -11,6 +12,12 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class DataGenerator {
+
+    @Value("${cdr.unix-gap.min}")
+    private int minUnixGap;
+
+    @Value("${cdr.unix-gap.max}")
+    private int maxUnixGap;
 
     public long generateRandomCallDuration(int maxCallDurationInMinutes) {
         return ThreadLocalRandom.current().nextInt(maxCallDurationInMinutes * 60) + 1;
@@ -32,7 +39,7 @@ public class DataGenerator {
     }
 
     public long generateRandomGap() {
-        return ThreadLocalRandom.current().nextInt(1000000, 1500000);
+        return ThreadLocalRandom.current().nextInt(minUnixGap, maxUnixGap);
     }
 
     @Deprecated

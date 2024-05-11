@@ -21,6 +21,7 @@ public class HrsService {
 
     private final KafkaTemplate<String, InvoiceDto> kafkaTemplate;
     private final TarifficationService tarifficationService;
+    private final SubscriptionsFeeService subscriptionsFeeService;
 
     private final Map<String, Integer> usedMinutes = new HashMap<>();
 
@@ -30,16 +31,15 @@ public class HrsService {
     public void invoicing(CallDataRecordPlusDto cdrPlus) {
         log.info(cdrPlus.toString());
 
-        var invoiceData = tarifficationService.createInvoice(cdrPlus, usedMinutes);
-        kafkaTemplate.send("hrs-reply", invoiceData);
-
         int callMonth = extractMonthFromCallData(cdrPlus);
 
-        //change - firstly
         if (callMonth > currentMonth) {
             currentMonth = callMonth;
-//            withdrawFee();
+            subscriptionsFeeService.subscriptionsFeeWithdrawal(usedMinutes);
         }
+
+        var invoiceData = tarifficationService.createInvoice(cdrPlus, usedMinutes);
+        kafkaTemplate.send("hrs-reply", invoiceData);
 
     }
 

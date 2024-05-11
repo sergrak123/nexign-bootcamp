@@ -18,7 +18,6 @@ public final class TariffFactory {
         if (typeTariff.equals("11")) {
             return new ClassicTariff();
         }
-
         if (typeTariff.equals("12")) {
             return new MonthlyTariff(usedMinutes);
         }

@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 @Builder
 public class PaymentDto {
 
-    @Pattern(regexp = "^\\d{11}$")
+    @Pattern(regexp = "^(7|8)\\d{10}$")
     private String msisdn;
 
     @Positive

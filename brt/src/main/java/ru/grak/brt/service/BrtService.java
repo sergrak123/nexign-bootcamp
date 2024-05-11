@@ -16,6 +16,7 @@ import ru.grak.common.enums.TypeCall;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -100,18 +101,26 @@ public class BrtService {
                 .getMonthValue();
     }
 
-    //test
-//    @EventListener(ApplicationReadyEvent.class)
-    public void testAuthentication() throws IOException {
+    //test - необходимо для возожности подмены данных генератора реальными файлами
+    //@EventListener(ApplicationReadyEvent.class)
+    public void filesProcessingAndSendingCallData() throws IOException {
 
-        String cdrFileName = "brt/data/cdr.txt";
+        String CDR_FOLDER_PATH = "brt/data/";
 
-        var data = Files.lines(Paths.get(cdrFileName))
-                .collect(Collectors.joining("\n"));
+        List<Path> cdrFiles = Files.list(Path.of(CDR_FOLDER_PATH)).toList();
 
-        processingAndSendingCallData(data);
+        for (Path cdrFile : cdrFiles) {
+            var cdrFilePath = Paths.get(CDR_FOLDER_PATH + cdrFile.getFileName());
+
+            var data = Files.lines(cdrFilePath)
+                    .collect(Collectors.joining("\n"));
+
+            processingAndSendingCallData(data);
+        }
+
     }
 
+    //test
     public List<CallDataRecordDto> getAuthorizedCallDataRecord() throws IOException {
         String cdrFileName = "brt/data/cdr.txt";
 

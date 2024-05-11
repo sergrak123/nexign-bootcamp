@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ChangeTariffDto {
 
-    @Pattern(regexp = "^\\d{11}$")
+    @Pattern(regexp = "^(7|8)\\d{10}$")
     private String msisdn;
 
     @NotBlank

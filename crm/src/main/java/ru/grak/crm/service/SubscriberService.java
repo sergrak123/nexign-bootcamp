@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import ru.grak.crm.dto.PaymentDto;
+import ru.grak.crm.entity.Client;
 import ru.grak.crm.exceptions.ClientNotFoundException;
 import ru.grak.crm.repository.ClientRepository;
 
@@ -18,7 +19,7 @@ public class SubscriberService {
 
     @Transactional
     @Modifying
-    public BigDecimal pay(PaymentDto payment) {
+    public Client pay(PaymentDto payment) {
 
         var client = clientRepository.findByPhoneNumber(payment.getMsisdn())
                 .orElseThrow(() ->
@@ -28,8 +29,6 @@ public class SubscriberService {
         BigDecimal updatedBalance = balance.add(payment.getMoney());
         client.setBalance(updatedBalance);
 
-        clientRepository.save(client);
-
-        return updatedBalance;
+        return clientRepository.save(client);
     }
 }

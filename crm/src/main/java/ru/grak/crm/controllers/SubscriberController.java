@@ -9,9 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.grak.crm.dto.PaymentDto;
+import ru.grak.crm.entity.Client;
 import ru.grak.crm.service.SubscriberService;
-
-import java.math.BigDecimal;
 
 @RestController
 @RequestMapping("/api/subscriber")
@@ -23,7 +22,7 @@ public class SubscriberController {
 
     @PatchMapping("/pay")
     @PreAuthorize("hasAnyAuthority('USER')")
-    public BigDecimal pay(@Valid @RequestBody PaymentDto payment) {
+    public Client pay(@Valid @RequestBody PaymentDto payment) {
         return subscriberService.pay(payment);
     }
 

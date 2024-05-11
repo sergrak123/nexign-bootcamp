@@ -4,11 +4,12 @@ VALUES ('79079765785', true);
 INSERT INTO abonents (phone_number, is_romashka_client)
 VALUES ('79940402705', true);
 INSERT INTO abonents (phone_number, is_romashka_client)
-VALUES ('79389821025', false);
+VALUES ('79389821025', true);
 INSERT INTO abonents (phone_number, is_romashka_client)
-VALUES ('79168034603', false);
+VALUES ('79168034603', true);
 INSERT INTO abonents (phone_number, is_romashka_client)
-VALUES ('79826977157', false);
+VALUES ('79826977157', true);
+--
 INSERT INTO abonents (phone_number, is_romashka_client)
 VALUES ('79304297409', false);
 INSERT INTO abonents (phone_number, is_romashka_client)
