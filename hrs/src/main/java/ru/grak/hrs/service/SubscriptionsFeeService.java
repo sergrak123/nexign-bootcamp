@@ -17,6 +17,12 @@ public class SubscriptionsFeeService {
     private final TariffRepository tariffRepository;
     private final KafkaTemplate<String, InvoiceDto> kafkaTemplate;
 
+    /**
+     * Рассчитывает абонентскую плату для каждого клиента с помесячным тарифом
+     * и отправляет счета в BRT для списания с клиентов данной стоимости.
+     *
+     * @param usedMinutes Данные по каждому клиенту с помесячной оплатой.
+     */
     public void subscriptionsFeeWithdrawal(Map<String, Integer> usedMinutes) {
 
         BigDecimal monthlySubscriptionsFee = tariffRepository

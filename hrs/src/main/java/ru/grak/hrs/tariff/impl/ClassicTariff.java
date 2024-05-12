@@ -9,8 +9,19 @@ import ru.grak.hrs.tariff.BaseTariff;
 
 import java.math.BigDecimal;
 
+/**
+ * Классический тариф для тарификации вызовов.
+ */
 public class ClassicTariff implements BaseTariff {
 
+    /**
+     * Рассчитывает стоимость вызова в соответствии с классическим тарифом.
+     *
+     * @param cdrPlus            Расширенные данные о вызове.
+     * @param tariffRepository   Репозиторий тарифов (кэшируется).
+     * @param callCostRepository Репозиторий стоимости вызовов (внутри и вне сети) (кэшируется).
+     * @return Стоимость вызова.
+     */
     @Override
     public BigDecimal calculateCallCost(CallDataRecordPlusDto cdrPlus,
                                         TariffRepository tariffRepository,

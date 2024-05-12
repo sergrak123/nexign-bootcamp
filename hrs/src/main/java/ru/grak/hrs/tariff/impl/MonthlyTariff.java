@@ -10,6 +10,9 @@ import ru.grak.hrs.tariff.BaseTariff;
 import java.math.BigDecimal;
 import java.util.Map;
 
+/**
+ * Ежемесячный тариф для тарификации вызовов.
+ */
 public class MonthlyTariff implements BaseTariff {
 
     private final Map<String, Integer> usedMinutes;
@@ -18,6 +21,15 @@ public class MonthlyTariff implements BaseTariff {
         this.usedMinutes = usedMinutes;
     }
 
+    /**
+     * Рассчитывает стоимость вызова в соответствии с ежемесячным тарифом
+     * и количеством использованных минут в месяце (usedMinutes).
+     *
+     * @param cdrPlus            Расширенные данные о вызове.
+     * @param tariffRepository   Репозиторий тарифов (кэшируется).
+     * @param callCostRepository Репозиторий стоимости вызовов (внутри и вне сети) (кэшируется).
+     * @return Стоимость вызова.
+     */
     @Override
     public BigDecimal calculateCallCost(CallDataRecordPlusDto cdrPlus,
                                         TariffRepository tariffRepository,

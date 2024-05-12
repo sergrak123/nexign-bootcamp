@@ -158,6 +158,15 @@ public class BrtService {
 
     }
 
+    /**
+     * Логирует данные, приходящие из CDR сервиса
+     */
+    private void loggingReceivedData(List<CallDataRecordDto> cdr) {
+        for (CallDataRecordDto record : cdr) {
+            log.info("Received: " + record);
+        }
+    }
+
     //test
     public List<CallDataRecordDto> getAuthorizedCallDataRecord() throws IOException {
         String cdrFileName = "brt/data/cdr.txt";
@@ -175,13 +184,6 @@ public class BrtService {
             }
         }
         return authorizedCdr;
-    }
-
-    private void loggingReceivedData(List<CallDataRecordDto> cdr) {
-        for (CallDataRecordDto record : cdr) {
-            log.info("Received: " + record);
-        }
-
     }
 
 }
