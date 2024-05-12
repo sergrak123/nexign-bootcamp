@@ -87,8 +87,8 @@ services:
     container_name: cdr
     environment:
       BOOTSTRAP_SERVERS_CONFIG: kafka:29092
-      MIN_UNIX_GAP: 500
-      MAX_UNIX_GAP: 700
+      MIN_UNIX_GAP: 80000
+      MAX_UNIX_GAP: 90000
       MAX_CALL_DURATION: 10
     ports:
       - "8080:8080"
