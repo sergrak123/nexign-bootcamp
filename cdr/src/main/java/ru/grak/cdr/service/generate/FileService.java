@@ -12,6 +12,9 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Сервис для работы с файлами.
+ */
 @Service
 public class FileService {
 
@@ -19,6 +22,13 @@ public class FileService {
     private static final String CDR_FILE_PREFIX = "cdr";
     private static final String CDR_FILE_EXTENSION = ".txt";
 
+    /**
+     * Сохраняет записи данных вызовов в файл.
+     *
+     * @param cdrList    Список записей данных вызова.
+     * @param fileNumber Номер файла.
+     * @throws IOException Если возникает ошибка ввода-вывода при записи в файл.
+     */
     public void saveCallDataRecords(List<CallDataRecordDto> cdrList, int fileNumber) throws IOException {
 
         createDirectory(CDR_FOLDER_PATH);
@@ -32,6 +42,14 @@ public class FileService {
         }
     }
 
+    /**
+     * Получает записи данных вызовов из файла в виде строки
+     * для последующей отправки данных (через кафку) в BRT.
+     *
+     * @param fileNumber Номер файла.
+     * @return Строка, содержащая записи данных вызовов.
+     * @throws IOException Если возникает ошибка ввода-вывода при чтении из файла.
+     */
     public String getCallDataRecords(int fileNumber) throws IOException {
 
         String cdrFileName = CDR_FOLDER_PATH + CDR_FILE_PREFIX + "_" + fileNumber + CDR_FILE_EXTENSION;
@@ -40,6 +58,12 @@ public class FileService {
                 .collect(Collectors.joining("\n"));
     }
 
+    /**
+     * Форматирует созданную запись звонка для записи в файл.
+     *
+     * @param dataRecord Запись для форматирования.
+     * @return Строка, в отформатированном виде.
+     */
     private static String cdrFormat(CallDataRecordDto dataRecord) {
         return dataRecord.getTypeCall().getNumericValueOfType() + ", "
                 + dataRecord.getMsisdnFirst() + ", "

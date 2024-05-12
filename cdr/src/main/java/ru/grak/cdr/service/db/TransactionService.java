@@ -14,6 +14,11 @@ public class TransactionService {
 
     private final TransactionRepository transactionRepository;
 
+    /**
+     * Сохраняет транзакции клиентов о звонках в базу данных.
+     *
+     * @param callDataRecords Список записей данных вызовов для сохранения.
+     */
     public void saveTransactions(List<CallDataRecordDto> callDataRecords) {
 
         for (CallDataRecordDto record : callDataRecords) {

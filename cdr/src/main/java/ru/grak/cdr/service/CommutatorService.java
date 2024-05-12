@@ -46,6 +46,15 @@ public class CommutatorService {
     private int filesAmount;
     private final List<CallDataRecordDto> cdr = new ArrayList<>();
 
+    /**
+     * Генерирует записи данных вызовов при старте приложения, дополнительно
+     * создавая зеркальую запись вызова при необходимости. При заполнении
+     * буфера необходимым количеством записей (fileCapacity) сохраняет данные
+     * в файл, добавляет их в базу данных о транзакциях и отправляет на обратку
+     * в BRT (топик кафки).
+     *
+     * @throws IOException Если возникает ошибка ввода-вывода при сохранении данных.
+     */
     @EventListener(ApplicationReadyEvent.class)
     public void generateCallDataRecords() throws IOException {
 
@@ -69,12 +78,23 @@ public class CommutatorService {
         }
     }
 
+    /**
+     * Добавляет запись в буфер. Обрабатывает данные буфера, если он заполнен.
+     *
+     * @param record Запись данных вызова.
+     */
     private void handleCallDataRecord(CallDataRecordDto record) throws IOException {
         recordsAmount++;
         cdr.add(record);
         saveAndSendDataIfBatchReady();
     }
 
+    /**
+     * Сохраняет записи данных вызовов в файл, добавляет их в базу данных и отправляет на обратку
+     * в BRT, если буфер готов к обработке.
+     *
+     * @throws IOException Если возникает ошибка ввода-вывода при сохранении или отправке данных.
+     */
     private void saveAndSendDataIfBatchReady() throws IOException {
         if (isPrepared()) {
             filesAmount++;
@@ -87,6 +107,12 @@ public class CommutatorService {
         }
     }
 
+    /**
+     * Проверяет, готов ли буфер к обработке данных вызовов (количество
+     * записей кратно размерности файла).
+     *
+     * @return true, если буфер готов к обработке, иначе false.
+     */
     private boolean isPrepared() {
         return recordsAmount % fileCapacity == 0;
     }

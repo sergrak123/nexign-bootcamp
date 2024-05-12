@@ -19,10 +19,24 @@ public class DataGenerator {
     @Value("${cdr.unix-gap.max}")
     private int maxUnixGap;
 
+    /**
+     * Генерирует случайную продолжительность вызова в секундах.
+     *
+     * @param maxCallDurationInMinutes Максимальная продолжительность вызова в минутах.
+     * @return Случайная продолжительность вызова в секундах.
+     */
     public long generateRandomCallDuration(int maxCallDurationInMinutes) {
         return ThreadLocalRandom.current().nextInt(maxCallDurationInMinutes * 60) + 1;
     }
 
+    /**
+     * Получает случайную пару номеров телефонов из списка абонентов, необходимых
+     * для генерации звонка. При этом накладывается условие, что msisdn1 != msisdn2.
+     * Реализацию с shuffle посчитал не оптимальным при многкратном вызове.
+     *
+     * @param abonents Список абонентов.
+     * @return Пара различных номеров телефонов.
+     */
     public Pair<String, String> getRandomPairOfMsisdn(List<Abonent> abonents) {
 
         String firstMsisdn = abonents.get(ThreadLocalRandom.current().nextInt(abonents.size()))
@@ -38,6 +52,12 @@ public class DataGenerator {
         return new Pair(firstMsisdn, secondMsisdn);
     }
 
+    /**
+     * Генерирует случайный временной промежуток в секундах для
+     * создания промежутков между звонками.
+     *
+     * @return Случайный временной промежуток в секундах.
+     */
     public long generateRandomGap() {
         return ThreadLocalRandom.current().nextInt(minUnixGap, maxUnixGap);
     }

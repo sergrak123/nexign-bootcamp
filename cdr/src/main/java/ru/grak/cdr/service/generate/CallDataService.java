@@ -12,6 +12,9 @@ import ru.grak.common.enums.TypeCall;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * Сервис для генерации данных вызовов.
+ */
 @Service
 @RequiredArgsConstructor
 public class CallDataService {
@@ -22,6 +25,14 @@ public class CallDataService {
     @Value("${cdr.generate.max-call-duration}")
     private int maxCallDuration;
 
+    /**
+     * Генерирует случайные данные вызова на основе начала времени звонка
+     * и пары номеров телефонов, совершивших звонок.
+     *
+     * @param callStartDateTime Время начала вызова (Unix time).
+     * @param msisdnPair        Пара номеров телефонов, которые совершили вызов.
+     * @return Сгенерированные данные вызова (CallDataRecord).
+     */
     public CallDataRecordDto generateRandomCallData(long callStartDateTime, Pair<String, String> msisdnPair) {
 
         TypeCall typeCall = ThreadLocalRandom.current().nextBoolean()
@@ -43,6 +54,13 @@ public class CallDataService {
                 .build();
     }
 
+    /**
+     * Генерирует зеркальную запись для данных вызова, т.е меняет
+     * тип вызова, меняет местами номера, время звонка остается прежним.
+     *
+     * @param record Запись с данными вызова.
+     * @return Зеркальная запись данных вызова, если второй абонент - клиент "Ромашка".
+     */
     public Optional<CallDataRecordDto> generateMirrorRecord(CallDataRecordDto record) {
 
         Abonent secondAbonent = abonentService.findByPhoneNumber(record.getMsisdnSecond());
