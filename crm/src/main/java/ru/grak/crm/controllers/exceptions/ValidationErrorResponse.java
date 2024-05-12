@@ -5,6 +5,9 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+/**
+ * Ответ на запрос с сообщениями об ошибках валидации.
+ */
 @Getter
 @RequiredArgsConstructor
 public class ValidationErrorResponse {
@@ -13,6 +16,9 @@ public class ValidationErrorResponse {
 
 }
 
+/**
+ * Класс представляющий нарушение валидации.
+ */
 @Getter
 @RequiredArgsConstructor
 class Violation {

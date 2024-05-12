@@ -16,6 +16,9 @@ import ru.grak.crm.exceptions.UnchangedTariffException;
 import ru.grak.crm.repository.ClientRepository;
 import ru.grak.crm.repository.TariffRepository;
 
+/**
+ * Сервис для управления клиентами.
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -24,6 +27,15 @@ public class ManagerService {
     private final TariffRepository tariffRepository;
     private final ClientRepository clientRepository;
 
+    /**
+     * Метод изменения тарифа для клиента.
+     *
+     * @param changeTariffDto информация о смене тарифа
+     * @return Обновленный клиент
+     * @throws ClientNotFoundException  если клиент не найден
+     * @throws TariffNotFoundException  если тариф не найден
+     * @throws UnchangedTariffException если тариф не был изменен
+     */
     @Transactional
     @Modifying
     public Client changeTariff(ChangeTariffDto changeTariffDto) {
@@ -43,6 +55,14 @@ public class ManagerService {
         return clientRepository.save(client);
     }
 
+    /**
+     * Метод создания абонента.
+     *
+     * @param abonentDto Информация об абоненте
+     * @return Созданный клиент
+     * @throws AbonentAlreadyExistException если абонент уже существует
+     * @throws TariffNotFoundException      если тариф не найден
+     */
     @Transactional
     public Client createAbonent(AbonentDto abonentDto) {
 

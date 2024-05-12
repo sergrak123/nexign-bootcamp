@@ -18,6 +18,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Класс для создания, валидации и извлечения JWT-токенов.
+ */
 @Component
 @RequiredArgsConstructor
 @Slf4j
@@ -33,6 +36,13 @@ public class TokenProvider {
 
     private final UserDetailsServiceImpl userDetailsService;
 
+    /**
+     * Метод для создания JWT-токена на основе имени пользователя и его ролей.
+     *
+     * @param username имя пользователя
+     * @param roles    список ролей пользователя
+     * @return JWT-токен
+     */
     public String createToken(String username, List<Role> roles) {
 
         Claims claims = Jwts.claims().setSubject(username);
@@ -49,6 +59,12 @@ public class TokenProvider {
                 .compact();
     }
 
+    /**
+     * Метод для извлечения JWT-токена из запроса.
+     *
+     * @param req HTTP-запрос
+     * @return JWT-токен
+     */
     public String resolveToken(HttpServletRequest req) {
         String bearerToken = req.getHeader("Authorization");
         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
@@ -57,6 +73,12 @@ public class TokenProvider {
         return null;
     }
 
+    /**
+     * Метод для проверки валидности JWT-токена.
+     *
+     * @param token JWT-токен
+     * @return true, если токен валиден, иначе - false
+     */
     public boolean validateToken(String token) {
         try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
@@ -67,6 +89,12 @@ public class TokenProvider {
         }
     }
 
+    /**
+     * Метод для извлечения имени пользователя из JWT-токена.
+     *
+     * @param token JWT-токен
+     * @return имя пользователя
+     */
     public String getUsername(String token) {
 
         return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
@@ -77,6 +105,12 @@ public class TokenProvider {
                 .map(role -> role.getName().getAuthority()).collect(Collectors.toList());
     }
 
+    /**
+     * Метод для получения аутентификации пользователя на основе JWT-токена.
+     *
+     * @param token JWT-токен
+     * @return аутентификация пользователя
+     */
     public Authentication getAuthentication(String token) {
         UserDetails userDetails = this.userDetailsService.loadUserByUsername(getUsername(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());

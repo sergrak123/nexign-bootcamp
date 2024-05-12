@@ -14,6 +14,9 @@ import org.springframework.web.filter.GenericFilterBean;
 
 import java.io.IOException;
 
+/**
+ * Фильтр для обработки JWT-токена.
+ */
 @Component
 @RequiredArgsConstructor
 @Slf4j

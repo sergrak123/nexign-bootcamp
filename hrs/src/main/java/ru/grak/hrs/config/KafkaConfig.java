@@ -23,7 +23,11 @@ public class KafkaConfig {
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapAddress;
 
-    //Cost Data to BRT
+    /**
+     * Фабрика продюсеров для отправки данных о выставленных счетах в BRT.
+     *
+     * @return фабрика продюсеров для отправки данных о счетах.
+     */
     @Bean
     public ProducerFactory<String, InvoiceDto> producerFactory() {
 
@@ -40,7 +44,11 @@ public class KafkaConfig {
         return new KafkaTemplate<>(producerFactory());
     }
 
-    //CDR+ from BRT
+    /**
+     * Фабрика консюмеров для получения CDR+ из BRT.
+     *
+     * @return фабрика консюмеров для получения CDR+ из BRT.
+     */
     @Bean
     public ConsumerFactory<String, CallDataRecordPlusDto> consumerFactory() {
         Map<String, Object> props = new HashMap<>();

@@ -17,13 +17,18 @@ import ru.grak.common.dto.InvoiceDto;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Конфигурация Kafka для настройки соединения с брокером Kafka.
+ */
 @Configuration
 public class KafkaConfig {
 
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapAddress;
 
-    //CDR+ to HRS
+    /**
+     * Фабрика продюсеров для отправки объектов CDR+ в Kafka (в HRS).
+     */
     @Bean
     public ProducerFactory<String, CallDataRecordPlusDto> producerFactory() {
 
@@ -40,7 +45,9 @@ public class KafkaConfig {
         return new KafkaTemplate<>(producerFactory());
     }
 
-    //CDR-file from CDR
+    /**
+     * Фабрика консюмеров для получения CDR-файлов из Kafka (из CDR).
+     */
     @Bean
     public ConsumerFactory<String, String> consumerFactory() {
         Map<String, Object> props = new HashMap<>();
@@ -62,7 +69,9 @@ public class KafkaConfig {
         return concurrentKafkaListenerContainerFactory;
     }
 
-    //Cost data from HRS
+    /**
+     * Фабрика консюмеров для получения данных о выставленном счете из Kafka (из HRS).
+     */
     @Bean
     public ConsumerFactory<String, InvoiceDto> costDataConsumerFactory() {
         Map<String, Object> props = new HashMap<>();

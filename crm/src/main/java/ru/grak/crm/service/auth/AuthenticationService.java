@@ -17,6 +17,12 @@ public class AuthenticationService {
     private final TokenProvider tokenProvider;
     private final UserService userService;
 
+    /**
+     * Метод для аутентификации пользователя.
+     *
+     * @param loginRequest Данные пользователя для входа.
+     * @return Ответ с JWT-токеном и другими данными пользователя.
+     */
     public JwtResponse login(LoginRequest loginRequest) {
 
         String username = loginRequest.getUsername();

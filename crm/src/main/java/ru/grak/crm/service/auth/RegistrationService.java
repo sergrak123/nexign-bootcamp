@@ -21,6 +21,12 @@ public class RegistrationService {
     private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    /**
+     * Метод для регистрации нового пользователя.
+     *
+     * @param registerRequest Данные для регистрации нового пользователя.
+     * @throws RoleNotFoundException если роль пользователя не найдена.
+     */
     public void registration(RegisterRequest registerRequest) throws RoleNotFoundException {
         User user = new User(
                 registerRequest.getUsername(),
@@ -35,10 +41,22 @@ public class RegistrationService {
         }
     }
 
+    /**
+     * Метод для шифрования пароля.
+     *
+     * @param registerRequest Данные для регистрации нового пользователя.
+     * @return Зашифрованный пароль.
+     */
     private String encodePassword(RegisterRequest registerRequest) {
         return bCryptPasswordEncoder.encode(registerRequest.getPassword());
     }
 
+    /**
+     * Метод для назначения роли пользователю. Роль по умолчанию - USER
+     *
+     * @param user пользователь.
+     * @throws RoleNotFoundException если роль пользователя не найдена.
+     */
     private void setUserRole(User user) throws RoleNotFoundException {
         user.setRoles(List.of(
                 roleRepository.findByName(RoleEnum.USER).orElseThrow(() ->

@@ -14,6 +14,9 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Глобальный обработчик исключений для API.
+ */
 @RestControllerAdvice
 public class ExceptionApiHandler {
 

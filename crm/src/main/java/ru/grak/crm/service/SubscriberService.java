@@ -11,12 +11,22 @@ import ru.grak.crm.repository.ClientRepository;
 
 import java.math.BigDecimal;
 
+/**
+ * Сервис для взаимодействия абонентов со своими данными.
+ */
 @Service
 @RequiredArgsConstructor
 public class SubscriberService {
 
     private final ClientRepository clientRepository;
 
+    /**
+     * Метод для совершения платежа на счет клиента.
+     *
+     * @param payment Информация о платеже.
+     * @return Обновленный клиент.
+     * @throws ClientNotFoundException если клиент не найден
+     */
     @Transactional
     @Modifying
     public Client pay(PaymentDto payment) {
