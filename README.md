@@ -60,7 +60,7 @@
 масштабирования обоих сервисов: CRM и BRT.
 
 ###
-> Документация OpenAPI доступна через Swagger UI: [http://localhost:8083/swagger-ui/index.html](http://localhost:8083/swagger-ui/index.html).
+> Документация OpenAPI доступна через Swagger UI: [http://localhost:8083/swagger-ui/index.html](http://localhost:8083/swagger-ui/index.html)
 ###
 
 #### Данные для авторизации в CRM:
@@ -71,7 +71,7 @@
 
 ###
 > [!TIP]
-> Просмотреть данные из Kafka topics можно через Kafdrop: [http://localhost:9000/](http://localhost:9000/).
+> Просмотреть данные из Kafka topics можно через Kafdrop: [http://localhost:9000/](http://localhost:9000/)
 ##
 
 ### Данные для авторизации в БД:
@@ -79,8 +79,8 @@
     - jdbc:h2:mem:localdb
     - username: sa
     - password: password
-  
-> UI для просмотра данных: [http://localhost:8080/h2-console](http://localhost:8080/h2-console).
+
+> UI для просмотра данных: [http://localhost:8080/h2-console](http://localhost:8080/h2-console)
 
 2. PostgreSQL
     - username: postgres
@@ -94,6 +94,7 @@
 ```
 docker-compose up
 ```
+
 2. Для остановки приложения:
 
 ```
@@ -101,3 +102,11 @@ docker-compose down
 ```
 
 > При ошибке проверить доступность всех необходимых портов.
+
+##
+
+### Дополнение
+
+> Схема баз данных(H2 и PostgreSQL): [https://drawsql.app/diagrams/nexign-db](https://drawsql.app/teams/ssau-/diagrams/nexign-db)
+
+
